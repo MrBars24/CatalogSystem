@@ -7,6 +7,7 @@ package dev;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,17 +17,22 @@ import java.sql.Statement;
  * @author Gerald Michael
  */
 public class DBHelper {
-    private Connection connection;
-    private Statement statement;
-    private ResultSet resultSet;
+    private static Connection connection;
     
     public DBHelper()
     {
+        
+    }
+    
+    public static Connection connect()
+    {
+        String url = "jdbc:mysql://localhost/db_catalog",
+            user = "root",
+            password = "";
+        
         try
         {
-            //Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/db_note","root","");
-            statement = connection.createStatement();
+            connection = DriverManager.getConnection(url, user, password);
             System.out.print("Connecting...");
         }
         catch (SQLException ex) {
@@ -35,10 +41,7 @@ public class DBHelper {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
-    }
-    
-    public void test()
-    {
-        System.out.println("TEST");
+        
+        return connection;
     }
 }
