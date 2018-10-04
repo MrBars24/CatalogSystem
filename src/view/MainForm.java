@@ -10,6 +10,8 @@ import dev.DBHelper;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -31,7 +33,12 @@ public class MainForm extends javax.swing.JFrame {
         // get columns info
         ResultSetMetaData rsmd;
         ResultSet rs = rControl.getResearches();
-
+        
+        HashMap map = new HashMap();
+        map.put("title", "TEST");
+        map.put("desc", "TEST DESC");
+        rControl.addResearch(map);
+        
         try {
             rsmd = rs.getMetaData();
             int columnCount = rsmd.getColumnCount();
