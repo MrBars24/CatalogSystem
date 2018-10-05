@@ -10,11 +10,15 @@ import dev.DBHelper;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import model.Research;
 
 /**
  *
@@ -22,29 +26,64 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MainForm extends javax.swing.JFrame {
 
+    private DefaultTableModel tm;
+    
     /**
      * Creates new form MainForm
      */
     public MainForm() {
         initComponents();
         
+        // for changing column and row model
+        tm = (DefaultTableModel) researchTable.getModel();
+        
+        initList();
+        insert();
+    }
+    
+    public void insert()
+    {
+        ResearchController rControl = new ResearchController();
+        Research research = new Research("test title", "desc", "Authors");
+        ResultSet rs = rControl.addResearch(research);
+        
+        String[] a = new String[4];
+        String dtxt;
+
+        try {
+            
+            // row append on insert
+            if (rs.next()) {
+                if(rs.getTimestamp(4) != null) {
+                    Date dt = rs.getTimestamp(4);
+                    dtxt = new SimpleDateFormat("MMM dd, YYYY").format(dt) + "";
+                } else {
+                    dtxt = "";
+                }
+
+                a[0] = rs.getInt(1) + "";
+                a[1] = rs.getString(2) + "";
+                a[2] = rs.getString(3) + "";
+                a[3] = dtxt;
+
+                tm.addRow(a);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void initList()
+    {
         ResearchController rControl = new ResearchController();
                 
         // get columns info
         ResultSetMetaData rsmd;
         ResultSet rs = rControl.getResearches();
         
-        HashMap map = new HashMap();
-        map.put("title", "TEST");
-        map.put("desc", "TEST DESC");
-        rControl.addResearch(map);
-        
         try {
             rsmd = rs.getMetaData();
             int columnCount = rsmd.getColumnCount();
-
-            // for changing column and row model
-            DefaultTableModel tm = (DefaultTableModel) researchTable.getModel();
 
             // clear existing columns 
             tm.setColumnCount(0);
@@ -60,10 +99,19 @@ public class MainForm extends javax.swing.JFrame {
             // add rows to table
             while (rs.next()) {
                 String[] a = new String[columnCount];
+                String dtxt;
                 
-                for(int i = 0; i < columnCount; i++) {
-                    a[i] = rs.getString(i+1);
+                if(rs.getTimestamp(4) != null) {
+                    Date dt = rs.getTimestamp(4);
+                    dtxt = new SimpleDateFormat("MMM dd, YYYY").format(dt) + "";
+                } else {
+                    dtxt = "";
                 }
+                
+                a[0] = rs.getInt(1) + "";
+                a[1] = rs.getString(2) + "";
+                a[2] = rs.getString(3) + "";
+                a[3] = dtxt;
                 
                 tm.addRow(a);
             }
@@ -111,7 +159,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(428, Short.MAX_VALUE))
+                .addContainerGap(368, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

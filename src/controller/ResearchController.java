@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Research;
 
 /**
  *
@@ -22,6 +23,7 @@ import java.util.logging.Logger;
 public class ResearchController {
     
     private Connection conn;
+    private final String RESEARCH_FIELDS = " `id`, `title`, `author`, `publish_at` ";
     
     public ResearchController()
     {
@@ -30,7 +32,7 @@ public class ResearchController {
     
     public ResultSet getResearches()
     {
-        String sql = "SELECT * FROM researches";
+        String sql = "SELECT " + RESEARCH_FIELDS + " FROM researches";
         Statement stmt;
         ResultSet rs = null;
         
@@ -44,15 +46,15 @@ public class ResearchController {
         return rs;
     }
     
-    public ResultSet getResearch(int id)
+    public ResultSet getResearch(long id)
     {
-        String sql = "SELECT * FROM researches where id = ? ";
+        String sql = "SELECT " + RESEARCH_FIELDS + " FROM researches where id = ? ";
         PreparedStatement stmt;
         ResultSet rs = null;
         
         try {
             stmt = conn.prepareStatement(sql);
-            stmt.setInt(1, id);
+            stmt.setLong(1, id);
             rs = stmt.executeQuery();
         } catch (SQLException ex) {
             Logger.getLogger(ResearchController.class.getName()).log(Level.SEVERE, null, ex);
@@ -61,18 +63,32 @@ public class ResearchController {
         return rs;
     }
     
-    public ResultSet addResearch(HashMap map)
+    public ResultSet addResearch(Research r)
     {
         String sql = "INSERT INTO researches(title, description) VALUES(?, ?)";
         PreparedStatement stmt;
         ResultSet rs = null;
         
         try {
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, map.get("title").toString());
-            stmt.setString(2, map.get("desc").toString());
+            stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, r.getTitle());
+            stmt.setString(2, r.getDesc());
+            stmt.setString(2, r.getAuthor());
 
-            stmt.executeUpdate();
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Adding user failed, no rows affected.");
+            }
+            
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return getResearch(generatedKeys.getLong(1));
+                }
+                else {
+                    throw new SQLException("Creating user failed, no ID obtained.");
+                }
+            }
+            
         } catch (SQLException ex) {
             Logger.getLogger(ResearchController.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -17,12 +17,21 @@ public class Research {
 
     public long id;
     public String title;
+    public String desc;
     public String author;
 
-    public Research(long id, String title, String author) {
-        this.id = id;
+    public Research(String title, String desc, String author) {
         this.title = title;
         this.author = author;
+        this.desc = desc;
+    }
+    
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
     
     public long getId() {
