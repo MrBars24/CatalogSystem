@@ -5,17 +5,89 @@
  */
 package view;
 
+import controller.ResearchController;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JDialog;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author IFL08
  */
 public class Research extends javax.swing.JFrame {
 
+    private DefaultTableModel tm;
+    
     /**
      * Creates new form Research
      */
     public Research() {
         initComponents();
+        
+        tm = (DefaultTableModel) jTable1.getModel();
+        
+        //initList();
+    }
+    
+    public void test()
+    {
+        System.out.println("TESTtest");
+        initList();
+    }
+    
+    public void initList()
+    {
+        ResearchController rControl = new ResearchController();
+                
+        // get columns info
+        ResultSetMetaData rsmd;
+        ResultSet rs = rControl.getResearches();
+        
+        try {
+            rsmd = rs.getMetaData();
+            int columnCount = rsmd.getColumnCount();
+
+            // clear existing columns 
+            tm.setColumnCount(0);
+
+            // add specified columns to table
+            for (int i = 1; i <= columnCount; i++ ) {
+                tm.addColumn(rsmd.getColumnName(i));
+            }
+            
+            // clear existing rows
+            tm.setRowCount(0);
+
+            // add rows to table
+            while (rs.next()) {
+                String[] a = new String[columnCount];
+                String dtxt;
+                
+                if(rs.getTimestamp(4) != null) {
+                    Date dt = rs.getTimestamp(4);
+                    dtxt = new SimpleDateFormat("MMM dd, YYYY").format(dt) + "";
+                } else {
+                    dtxt = "";
+                }
+                
+                a[0] = rs.getInt(1) + "";
+                a[1] = rs.getString(2) + "";
+                a[2] = rs.getString(3) + "";
+                a[3] = dtxt;
+                
+                tm.addRow(a);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -69,6 +141,11 @@ public class Research extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(159, 204, 204));
+        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel2MouseClicked(evt);
+            }
+        });
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/human-eye-shape.png"))); // NOI18N
 
@@ -359,6 +436,13 @@ public class Research extends javax.swing.JFrame {
     private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField6ActionPerformed
+
+    private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
+        // TODO add your handling code here:
+        System.out.println("CLICKED");
+        ResearchDialogSubmit dialogSubmit = new ResearchDialogSubmit(this, rootPaneCheckingEnabled);
+        dialogSubmit.setVisible(true);
+    }//GEN-LAST:event_jPanel2MouseClicked
 
     /**
      * @param args the command line arguments
