@@ -96,5 +96,10 @@ public class ResearchController {
         return rs;
     }
     
-    
+    public ResultSet updateResearch(Research r)
+    {
+        ResultSet rs = null;
+        
+        return rs;
+    }
 }
