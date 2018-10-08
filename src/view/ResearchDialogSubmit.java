@@ -119,7 +119,7 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
 
         jButton1.setBackground(new java.awt.Color(102, 102, 102));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("SIgn in");
+        jButton1.setText("Save");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
