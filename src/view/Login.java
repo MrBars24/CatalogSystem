@@ -147,10 +147,10 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(353, 0, 420, 340));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(353, 0, 420, 370));
 
         overlay.setBackground(new java.awt.Color(0, 0, 0));
         overlay.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -158,13 +158,13 @@ public class Login extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Calibri", 0, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Welcome to ");
-        overlay.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, -1, -1));
+        overlay.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, -1, -1));
 
-        getContentPane().add(overlay, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 370, 340));
+        getContentPane().add(overlay, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 370, 370));
 
         jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\IFL08\\Downloads\\research.jpg")); // NOI18N
         jLabel3.setText("jLabel3");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 340));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 370));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
