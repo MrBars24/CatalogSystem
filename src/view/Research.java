@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.table.DefaultTableModel;
+import java.awt.Color;
 
 /**
  *
@@ -149,6 +150,12 @@ public class Research extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel5MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel5MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jPanel5MouseExited(evt);
+            }
         });
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/add-icon.png"))); // NOI18N
@@ -268,6 +275,18 @@ public class Research extends javax.swing.JFrame {
         ResearchDialogSubmit researchDialogSubmit = new ResearchDialogSubmit(this, true);
         researchDialogSubmit.setVisible(true);
     }//GEN-LAST:event_jPanel5MouseClicked
+
+    private void jPanel5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseEntered
+        // TODO add your handling code here:
+        jPanel5.setOpaque(true);
+        jPanel5.setBackground(new Color(149, 191, 191));        
+    }//GEN-LAST:event_jPanel5MouseEntered
+
+    private void jPanel5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseExited
+        // TODO add your handling code here:
+        jPanel5.setOpaque(true);
+        jPanel5.setBackground(new Color(159,204,204));
+    }//GEN-LAST:event_jPanel5MouseExited
 
     /**
      * @param args the command line arguments
