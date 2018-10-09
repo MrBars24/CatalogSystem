@@ -34,12 +34,6 @@ public class Research extends javax.swing.JFrame {
         
         tm = (DefaultTableModel) jTable1.getModel();
         
-        //initList();
-    }
-    
-    public void test()
-    {
-        System.out.println("TESTtest");
         initList();
     }
     
@@ -151,6 +145,11 @@ public class Research extends javax.swing.JFrame {
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 230, -1));
 
         jPanel5.setBackground(new java.awt.Color(159, 204, 204));
+        jPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel5MouseClicked(evt);
+            }
+        });
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/add-icon.png"))); // NOI18N
 
@@ -263,6 +262,12 @@ public class Research extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
+        // TODO add your handling code here:
+        ResearchDialogSubmit researchDialogSubmit = new ResearchDialogSubmit(this, true);
+        researchDialogSubmit.setVisible(true);
+    }//GEN-LAST:event_jPanel5MouseClicked
 
     /**
      * @param args the command line arguments
