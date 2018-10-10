@@ -38,39 +38,6 @@ public class MainForm extends javax.swing.JFrame {
         tm = (DefaultTableModel) researchTable.getModel();
         
         initList();
-        insert();
-    }
-    
-    public void insert()
-    {
-        ResearchController rControl = new ResearchController();
-        Research research = new Research("test title", "desc", "Authors");
-        ResultSet rs = rControl.addResearch(research);
-        
-        String[] a = new String[4];
-        String dtxt;
-
-        try {
-            
-            // row append on insert
-            if (rs.next()) {
-                if(rs.getTimestamp(4) != null) {
-                    Date dt = rs.getTimestamp(4);
-                    dtxt = new SimpleDateFormat("MMM dd, YYYY").format(dt) + "";
-                } else {
-                    dtxt = "";
-                }
-
-                a[0] = rs.getInt(1) + "";
-                a[1] = rs.getString(2) + "";
-                a[2] = rs.getString(3) + "";
-                a[3] = dtxt;
-
-                tm.addRow(a);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
     public void initList()

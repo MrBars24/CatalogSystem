@@ -4,20 +4,29 @@
  * and open the template in the editor.
  */
 package view;
+import controller.ResearchController;
 import java.awt.event.ActionListener;
 import java.awt.Color;
+import java.awt.Frame;
+import java.sql.ResultSet;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import model.Research;
+
+
 /**
  *
  * @author Gerald
  */
 public class ResearchDialogSubmit extends javax.swing.JDialog {
-    Research research;
+    ResearchV rs;
     /**
      * Creates new form ResearchDialogSubmit
      */
     public ResearchDialogSubmit(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        research = (Research) parent;
+        rs = (ResearchV) parent;
         initComponents();
     }
 
@@ -246,6 +255,19 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
 
     private void resSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resSaveActionPerformed
         // TODO add your handling code here:
+        String title = resTitle.getText();
+        String description = resDesc.getText();
+        String[] authors = {"test1", "test2"};
+        
+        DateFormat oDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Timestamp publish = new Timestamp(jXDatePicker1.getDate().getTime());
+        
+        Research research = new Research(title, description, String.join(",", authors), publish);
+        ResearchController researchController = new ResearchController();
+        ResultSet r = researchController.addResearch(research);
+        
+        rs.appendResearch(r);
+        dispose();
     }//GEN-LAST:event_resSaveActionPerformed
 
     private void resDescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resDescActionPerformed

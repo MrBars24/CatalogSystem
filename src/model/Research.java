@@ -8,6 +8,7 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 /**
  *
@@ -19,11 +20,25 @@ public class Research {
     public String title;
     public String desc;
     public String author;
+    public Timestamp publishAt;
 
-    public Research(String title, String desc, String author) {
+    public Research(String title, String desc, String author, Timestamp publishAt) {
         this.title = title;
         this.author = author;
         this.desc = desc;
+        this.publishAt = publishAt;
+    }
+
+    public Research(String test_title, String desc, String authors) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public Timestamp getPublishAt() {
+        return publishAt;
+    }
+
+    public void setPublishAt(Timestamp publishAt) {
+        this.publishAt = publishAt;
     }
     
     public String getDesc() {

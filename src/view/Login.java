@@ -29,7 +29,7 @@ public class Login extends javax.swing.JFrame {
         UserController userController = new UserController();
         
         if(userController.checkUser(username, pwd)) {
-            Research research = new Research();
+            ResearchV research = new ResearchV();
             research.setVisible(true);
             this.dispose();
         } else {

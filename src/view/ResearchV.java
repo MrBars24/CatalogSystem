@@ -18,24 +18,51 @@ import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
+import model.Research;
 
 /**
  *
  * @author IFL08
  */
-public class Research extends javax.swing.JFrame {
+public class ResearchV extends javax.swing.JFrame {
 
     private DefaultTableModel tm;
     
     /**
      * Creates new form Research
      */
-    public Research() {
+    public ResearchV() {
         initComponents();
         
         tm = (DefaultTableModel) jTable1.getModel();
         
         initList();
+    }
+    
+    public void appendResearch(ResultSet rs)
+    {
+
+        try {
+            if(rs.next()) {
+                String a[] = new String[4];
+                String dtxt;
+                if(rs.getTimestamp(4) != null) {
+                    Date dt = rs.getTimestamp(4);
+                    dtxt = new SimpleDateFormat("MMM dd, YYYY").format(dt) + "";
+                } else {
+                    dtxt = "";
+                }
+
+                a[0] = rs.getInt(1) + "";
+                a[1] = rs.getString(2) + "";
+                a[2] = rs.getString(3) + "";
+                a[3] = dtxt;
+
+                tm.addRow(a);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ResearchV.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void initList()
@@ -292,6 +319,7 @@ public class Research extends javax.swing.JFrame {
     private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
         // TODO add your handling code here:
         ResearchDialogSubmit researchDialogSubmit = new ResearchDialogSubmit(this, true);
+        researchDialogSubmit.setDefaultCloseOperation(researchDialogSubmit.DISPOSE_ON_CLOSE);
         researchDialogSubmit.setVisible(true);
     }//GEN-LAST:event_jPanel5MouseClicked
 
@@ -366,7 +394,7 @@ public class Research extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Research().setVisible(true);
+                new ResearchV().setVisible(true);
             }
         });
     }

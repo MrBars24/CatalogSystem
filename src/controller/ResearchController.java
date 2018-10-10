@@ -65,7 +65,7 @@ public class ResearchController {
     
     public ResultSet addResearch(Research r)
     {
-        String sql = "INSERT INTO researches(title, description) VALUES(?, ?)";
+        String sql = "INSERT INTO researches(title, description, author, publish_at) VALUES(?, ?, ?, ?)";
         PreparedStatement stmt;
         ResultSet rs = null;
         
@@ -73,7 +73,8 @@ public class ResearchController {
             stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, r.getTitle());
             stmt.setString(2, r.getDesc());
-            stmt.setString(2, r.getAuthor());
+            stmt.setString(3, r.getAuthor());
+            stmt.setTimestamp(4, r.getPublishAt());
 
             int affectedRows = stmt.executeUpdate();
             if (affectedRows == 0) {
