@@ -259,7 +259,6 @@ public class Research extends javax.swing.JFrame {
             }
         });
         jTable1.setGridColor(new java.awt.Color(204, 204, 204));
-        jTable1.setSelectionForeground(new java.awt.Color(102, 102, 102));
         jScrollPane1.setViewportView(jTable1);
 
         jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 860, 380));
