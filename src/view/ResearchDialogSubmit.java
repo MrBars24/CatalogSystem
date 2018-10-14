@@ -9,9 +9,14 @@ import java.awt.event.ActionListener;
 import java.awt.Color;
 import java.awt.Frame;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.ListModel;
 import model.Research;
 
 
@@ -21,13 +26,58 @@ import model.Research;
  */
 public class ResearchDialogSubmit extends javax.swing.JDialog {
     ResearchV rs;
+    private String type;
+    private long uid = 0;
+    DefaultListModel model;
+    
     /**
      * Creates new form ResearchDialogSubmit
      */
     public ResearchDialogSubmit(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         rs = (ResearchV) parent;
+        type = "add";
         initComponents();
+        
+        model = new DefaultListModel();
+        jList2.setModel(model);
+    }
+    
+    public ResearchDialogSubmit(long id, java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
+        rs = (ResearchV) parent;
+        type = "edit";
+        uid = id;
+        initComponents();
+        
+        model = new DefaultListModel();
+        jList2.setModel(model);
+        populateForm();
+    }
+    
+    public void populateForm()
+    {
+        try {
+            ResearchController rc = new ResearchController();
+            ResultSet rs = rc.getResearch(uid);
+            
+            if(rs.next()) {
+                resTitle.setText(rs.getString(2));
+                resDesc.setText(rs.getString(5));
+                
+                String[] authors = rs.getString(3).split(",");
+                for(String auth : authors) {
+                    model.addElement(auth);
+                }
+                
+                DateFormat oDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Timestamp publish = rs.getTimestamp(4);
+                jXDatePicker1.setDate(publish);
+                
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ResearchDialogSubmit.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -406,17 +456,29 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
         // TODO add your handling code here:
         String title = resTitle.getText();
         String description = resDesc.getText();
-        String[] authors = {"test1", "test2"};
+        String[] authors = new String[model.getSize()];
+                
+        for(int i = 0; i < model.getSize(); i++) {
+            authors[i] = (String) model.get(i);
+        }
 
         DateFormat oDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Timestamp publish = new Timestamp(jXDatePicker1.getDate().getTime());
-
+        
         Research research = new Research(title, description, String.join(",", authors), publish);
         ResearchController researchController = new ResearchController();
-        ResultSet r = researchController.addResearch(research);
-
-        rs.appendResearch(r);
-        dispose();
+        
+        if(this.type == "add") {
+            ResultSet r = researchController.addResearch(research);
+            rs.appendResearch(r);
+            dispose();
+        } else {
+            research.setId(uid);
+            ResultSet r = researchController.updateResearch(research);
+            rs.updateRow(r);
+            dispose();         
+        }
+        
     }//GEN-LAST:event_resSaveActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -429,6 +491,8 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
 
     private void addAuthorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAuthorActionPerformed
         // TODO add your handling code here:
+        String author = jTextField1.getText();
+        model.addElement(author);
     }//GEN-LAST:event_addAuthorActionPerformed
 
     private void jXDatePicker1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jXDatePicker1ActionPerformed

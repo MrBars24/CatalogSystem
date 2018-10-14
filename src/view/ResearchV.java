@@ -57,8 +57,42 @@ public class ResearchV extends javax.swing.JFrame {
                 a[1] = rs.getString(2) + "";
                 a[2] = rs.getString(3) + "";
                 a[3] = dtxt;
+                a[4] = rs.getString(5) + "";
 
                 tm.addRow(a);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ResearchV.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void updateRow(ResultSet rs)
+    {
+        if(rs == null) return;
+        try {
+            if(rs.next()) {
+                String a[] = new String[4];
+                String dtxt;
+                if(rs.getTimestamp(4) != null) {
+                    Date dt = rs.getTimestamp(4);
+                    dtxt = new SimpleDateFormat("MMM dd, YYYY").format(dt) + "";
+                } else {
+                    dtxt = "";
+                }
+
+                a[0] = rs.getInt(1) + "";
+                a[1] = rs.getString(2) + "";
+                a[2] = rs.getString(3) + "";
+                a[3] = dtxt;
+                a[4] = rs.getString(5) + "";
+                
+                int index = jTable1.getSelectedRow();
+                jTable1.setValueAt(a[0], index, 0);
+                jTable1.setValueAt(a[1], index, 1);
+                jTable1.setValueAt(a[2], index, 2);
+                jTable1.setValueAt(a[3], index, 3);
+                jTable1.setValueAt(a[4], index, 4);
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(ResearchV.class.getName()).log(Level.SEVERE, null, ex);
@@ -104,6 +138,7 @@ public class ResearchV extends javax.swing.JFrame {
                 a[1] = rs.getString(2) + "";
                 a[2] = rs.getString(3) + "";
                 a[3] = dtxt;
+                a[4] = rs.getString(5) + "";
                 
                 tm.addRow(a);
             }
@@ -147,6 +182,7 @@ public class ResearchV extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel4.setBackground(new java.awt.Color(159, 204, 204));
+        jPanel4.setEnabled(false);
         jPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel4MouseClicked(evt);
@@ -222,6 +258,9 @@ public class ResearchV extends javax.swing.JFrame {
 
         jPanel6.setBackground(new java.awt.Color(159, 204, 204));
         jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel6MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jPanel6MouseEntered(evt);
             }
@@ -349,6 +388,14 @@ public class ResearchV extends javax.swing.JFrame {
 
     private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
         // TODO add your handling code here:
+        int index = jTable1.getSelectedRow();
+        
+        String id = jTable1.getModel().getValueAt(index, 0).toString();
+        
+        ResearchController researchController = new ResearchController();
+        if(researchController.deleteResearch(id) > 0) {
+            tm.removeRow(index);
+        }
     }//GEN-LAST:event_jPanel4MouseClicked
 
     private void jPanel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseEntered
@@ -362,6 +409,16 @@ public class ResearchV extends javax.swing.JFrame {
         jPanel4.setOpaque(true);
         jPanel4.setBackground(new Color(159,204,204));
     }//GEN-LAST:event_jPanel4MouseExited
+
+    private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
+        // TODO add your handling code here:
+        int index = jTable1.getSelectedRow();
+        int id = Integer.parseInt(jTable1.getModel().getValueAt(index, 0).toString());
+        
+        ResearchDialogSubmit researchDialogSubmit = new ResearchDialogSubmit(id, this, true);
+        researchDialogSubmit.setDefaultCloseOperation(researchDialogSubmit.DISPOSE_ON_CLOSE);
+        researchDialogSubmit.setVisible(true);
+    }//GEN-LAST:event_jPanel6MouseClicked
 
    
     /**

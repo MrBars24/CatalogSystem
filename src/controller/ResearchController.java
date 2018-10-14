@@ -23,7 +23,7 @@ import model.Research;
 public class ResearchController {
     
     private Connection conn;
-    private final String RESEARCH_FIELDS = " `id`, `title`, `author`, `publish_at` ";
+    private final String RESEARCH_FIELDS = " `id`, `title`, `author`, `publish_at`, `description` ";
     
     public ResearchController()
     {
@@ -99,8 +99,41 @@ public class ResearchController {
     
     public ResultSet updateResearch(Research r)
     {
+        String sql = "UPDATE researches set title = ?, description = ?, author = ?, publish_at = ? WHERE id = ?";
+        PreparedStatement stmt;
         ResultSet rs = null;
         
-        return rs;
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, r.getTitle());
+            stmt.setString(2, r.getDesc());
+            stmt.setString(3, r.getAuthor());
+            stmt.setTimestamp(4, r.getPublishAt());
+            stmt.setLong(5, r.getId());
+            
+            if(stmt.executeUpdate() > 0) {
+                return getResearch(r.getId());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ResearchController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
+    }
+    
+    public int deleteResearch(String id)
+    {
+        String sql = "DELETE FROM researches WHERE id = ?";
+        PreparedStatement stmt;
+        
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, id);
+            return stmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ResearchController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return 0;
     }
 }
