@@ -11,9 +11,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Keyword;
 import model.Research;
 
 /**
@@ -83,6 +85,7 @@ public class ResearchController {
             
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
+                    addKeywords(generatedKeys.getLong(1), r.getKeyword());
                     return getResearch(generatedKeys.getLong(1));
                 }
                 else {
@@ -95,6 +98,26 @@ public class ResearchController {
         }
         
         return rs;
+    }
+    
+    public void addKeywords(long id, ArrayList<Keyword> key)
+    {
+        String sqlKeyword = "INSERT INTO keywords(research_id, keyword) VALUES(?,?)";
+        PreparedStatement stmt;
+        ResultSet rs = null;
+        
+        try {    
+            stmt = conn.prepareStatement(sqlKeyword);
+            for (int i = 0; i < key.size(); i++) {
+                stmt.setLong(1, id);
+                stmt.setString(2, key.get(i).getKeyword());
+                stmt.addBatch();
+            }
+            stmt.executeBatch();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ResearchController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public ResultSet updateResearch(Research r)
@@ -127,6 +150,10 @@ public class ResearchController {
         PreparedStatement stmt;
         
         try {
+            stmt = conn.prepareStatement("DELETE FROM keywords WHERE research_id = ?");
+            stmt.setString(1, id);
+            stmt.executeUpdate();
+            
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, id);
             return stmt.executeUpdate();

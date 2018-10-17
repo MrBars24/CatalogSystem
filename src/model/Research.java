@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 /**
  *
@@ -21,6 +22,17 @@ public class Research {
     public String desc;
     public String author;
     public Timestamp publishAt;
+    public ArrayList<Keyword> keyword;
+
+
+    public Research(String title, String desc, String author, Timestamp publishAt, ArrayList<Keyword> keyword) {
+        this.title = title;
+        this.desc = desc;
+        this.author = author;
+        this.publishAt = publishAt;
+        this.keyword = keyword;
+    }
+    
 
     public Research(String title, String desc, String author, Timestamp publishAt) {
         this.title = title;
@@ -31,6 +43,14 @@ public class Research {
 
     public Research(String test_title, String desc, String authors) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public ArrayList<Keyword> getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(ArrayList<Keyword> keyword) {
+        this.keyword = keyword;
     }
     
     public Timestamp getPublishAt() {

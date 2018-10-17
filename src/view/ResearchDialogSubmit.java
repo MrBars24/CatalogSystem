@@ -13,10 +13,12 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
+import model.Keyword;
 import model.Research;
 
 
@@ -29,6 +31,7 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
     private String type;
     private long uid = 0;
     DefaultListModel model;
+    DefaultListModel keyModel;
     
     /**
      * Creates new form ResearchDialogSubmit
@@ -40,6 +43,9 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
         initComponents();
         
         model = new DefaultListModel();
+        keyModel = new DefaultListModel();
+        
+        jList3.setModel(keyModel);
         jList2.setModel(model);
     }
     
@@ -51,7 +57,10 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
         initComponents();
         
         model = new DefaultListModel();
+        keyModel = new DefaultListModel();
         jList2.setModel(model);
+        jList3.setModel(keyModel);
+        
         populateForm();
     }
     
@@ -457,15 +466,22 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
         String title = resTitle.getText();
         String description = resDesc.getText();
         String[] authors = new String[model.getSize()];
+        ArrayList<Keyword> keyword = new ArrayList(); 
                 
         for(int i = 0; i < model.getSize(); i++) {
             authors[i] = (String) model.get(i);
+        }
+        
+        for(int i = 0; i < keyModel.getSize(); i++) {
+            Keyword kw = new Keyword();
+            kw.setKeyword((String) keyModel.get(i));
+            keyword.add(kw);
         }
 
         DateFormat oDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Timestamp publish = new Timestamp(jXDatePicker1.getDate().getTime());
         
-        Research research = new Research(title, description, String.join(",", authors), publish);
+        Research research = new Research(title, description, String.join(",", authors), publish, keyword);
         ResearchController researchController = new ResearchController();
         
         if(this.type == "add") {
@@ -511,6 +527,8 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
 
     private void addKeywordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addKeywordActionPerformed
         // TODO add your handling code here:
+        String kw = jTextField2.getText();
+        keyModel.addElement(kw);
     }//GEN-LAST:event_addKeywordActionPerformed
 
     private void delKeywordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delKeywordActionPerformed

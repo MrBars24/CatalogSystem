@@ -44,7 +44,7 @@ public class ResearchV extends javax.swing.JFrame {
 
         try {
             if(rs.next()) {
-                String a[] = new String[4];
+                String a[] = new String[5];
                 String dtxt;
                 if(rs.getTimestamp(4) != null) {
                     Date dt = rs.getTimestamp(4);
@@ -71,7 +71,7 @@ public class ResearchV extends javax.swing.JFrame {
         if(rs == null) return;
         try {
             if(rs.next()) {
-                String a[] = new String[4];
+                String a[] = new String[5];
                 String dtxt;
                 if(rs.getTimestamp(4) != null) {
                     Date dt = rs.getTimestamp(4);
