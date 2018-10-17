@@ -144,23 +144,27 @@ public class ResearchController {
         return null;
     }
     
-    public int deleteResearch(String id)
+    public int[] deleteResearch(long[] id)
     {
         String sql = "DELETE FROM researches WHERE id = ?";
-        PreparedStatement stmt;
+        PreparedStatement stmt, stmtResearch;
         
         try {
             stmt = conn.prepareStatement("DELETE FROM keywords WHERE research_id = ?");
-            stmt.setString(1, id);
-            stmt.executeUpdate();
+            stmtResearch = conn.prepareStatement(sql);
+            for(int i = 0; i < id.length; i++) {
+                stmt.setLong(1, id[i]);
+                stmtResearch.setLong(1, id[i]);
+                stmt.addBatch();
+                stmtResearch.addBatch();
+            }
             
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, id);
-            return stmt.executeUpdate();
+            stmtResearch.executeBatch();
+            return stmt.executeBatch();
         } catch (SQLException ex) {
             Logger.getLogger(ResearchController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return 0;
+        return null;
     }
 }

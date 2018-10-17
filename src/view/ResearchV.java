@@ -516,13 +516,22 @@ public class ResearchV extends javax.swing.JFrame {
 
     private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
         // TODO add your handling code here:
-        int index = jTable1.getSelectedRow();
+        int[] index = jTable1.getSelectedRows();
+        long[] id = new long[index.length];
         
-        String id = jTable1.getModel().getValueAt(index, 0).toString();
+        int i = 0;
+        for(int ind : index) {
+            id[i] = Integer.parseInt(jTable1.getModel().getValueAt(ind, 0).toString());
+            i++;
+        }
         
         ResearchController researchController = new ResearchController();
-        if(researchController.deleteResearch(id) > 0) {
-            tm.removeRow(index);
+        int[] res = researchController.deleteResearch(id);
+        
+        if(res.length > 0) {
+            for (int j = index.length - 1; j >= 0; j--) {
+                tm.removeRow(index[j]);
+            }
         }
     }//GEN-LAST:event_jPanel4MouseClicked
 
