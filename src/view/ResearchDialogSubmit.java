@@ -14,6 +14,8 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -66,26 +68,26 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
     
     public void populateForm()
     {
-        try {
-            ResearchController rc = new ResearchController();
-            ResultSet rs = rc.getResearch(uid);
-            
-            if(rs.next()) {
-                resTitle.setText(rs.getString(2));
-                resDesc.setText(rs.getString(5));
-                
-                String[] authors = rs.getString(3).split(",");
-                for(String auth : authors) {
-                    model.addElement(auth);
-                }
-                
-                DateFormat oDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                Timestamp publish = rs.getTimestamp(4);
-                jXDatePicker1.setDate(publish);
-                
+        ResearchController rc = new ResearchController();
+        HashMap rs = rc.getResearchMap(uid);
+
+        if(rs.size() > 0) {
+            resTitle.setText((String) rs.get("title"));
+            resDesc.setText((String) rs.get("description"));
+
+            String[] authors = rs.get("author").toString().split(",");
+            for(String auth : authors) {
+                model.addElement(auth);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(ResearchDialogSubmit.class.getName()).log(Level.SEVERE, null, ex);
+
+            DateFormat oDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Timestamp publish = (Timestamp) rs.get("publish_at");
+            jXDatePicker1.setDate(publish);
+            
+            List key = (List) rs.get("keyword");
+            for(int i = 0; i < key.size(); i++) {
+                keyModel.add(i, key.get(i));
+            }
         }
     }
 
@@ -503,12 +505,20 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
 
     private void delAuthorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delAuthorActionPerformed
         // TODO add your handling code here:
+        if(jList2.getSelectedIndices().length <= 0) return;
+        int[] selectedIndex = jList2.getSelectedIndices();
+        
+        for(int i = selectedIndex.length - 1; i >= 0; i--) {
+            model.remove(selectedIndex[i]);
+        }
+        
     }//GEN-LAST:event_delAuthorActionPerformed
 
     private void addAuthorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addAuthorActionPerformed
         // TODO add your handling code here:
         String author = jTextField1.getText();
         model.addElement(author);
+        jTextField1.setText("");
     }//GEN-LAST:event_addAuthorActionPerformed
 
     private void jXDatePicker1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jXDatePicker1ActionPerformed
@@ -529,10 +539,17 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
         // TODO add your handling code here:
         String kw = jTextField2.getText();
         keyModel.addElement(kw);
+        jTextField2.setText("");
     }//GEN-LAST:event_addKeywordActionPerformed
 
     private void delKeywordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delKeywordActionPerformed
         // TODO add your handling code here:
+        if(jList3.getSelectedIndices().length <= 0) return;
+        int[] selectedIndex = jList3.getSelectedIndices();
+        
+        for(int i = selectedIndex.length - 1; i >= 0; i--) {
+            keyModel.remove(selectedIndex[i]);
+        }
     }//GEN-LAST:event_delKeywordActionPerformed
 
     /**

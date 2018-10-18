@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Keyword;
@@ -63,6 +64,43 @@ public class ResearchController {
         }
         
         return rs;
+    }
+    
+    public HashMap getResearchMap(long id) {
+        HashMap hash = new HashMap();
+        
+        String sql = "SELECT " + RESEARCH_FIELDS + " FROM researches where id = ? ";
+        PreparedStatement stmt;
+        ResultSet rs = null;
+        
+        try {
+            List<String> keywords = new ArrayList();
+            stmt = conn.prepareStatement("SELECT keyword FROM keywords WHERE research_id = ?");
+            stmt.setLong(1, id);
+            rs = stmt.executeQuery();
+            while(rs.next()) {
+                keywords.add(rs.getString(1));
+            }
+            
+            stmt = conn.prepareStatement(sql);
+            stmt.setLong(1, id);
+            rs = stmt.executeQuery();
+            
+            while(rs.next()) {
+                hash.put("id", rs.getInt(1));
+                hash.put("title", rs.getString(2));
+                hash.put("author", rs.getString(3));
+                hash.put("publish_at", rs.getTimestamp(4));
+                hash.put("description", rs.getString(5));
+                hash.put("keyword", keywords);
+            }
+            
+            return hash;
+        } catch (SQLException ex) {
+            Logger.getLogger(ResearchController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
     }
     
     public ResultSet addResearch(Research r)
