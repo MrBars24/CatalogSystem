@@ -21,6 +21,7 @@ import java.awt.Color;
 import java.util.Timer;
 import java.util.TimerTask;
 import model.Research;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -498,6 +499,14 @@ public class ResearchV extends javax.swing.JFrame {
     private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
         // TODO add your handling code here:
         if(jTable1.getSelectedRows().length == 0) return;
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like Delete","Warning",dialogButton);
+        if(dialogResult == JOptionPane.YES_OPTION){
+          // Saving code here
+        } else {
+            System.out.println("No");
+            return;
+        }
         
         int[] index = jTable1.getSelectedRows();
         long[] id = new long[index.length];
