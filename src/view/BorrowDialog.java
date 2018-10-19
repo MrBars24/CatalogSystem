@@ -5,16 +5,43 @@
  */
 package view;
 
+import controller.ResearchController;
+import javax.swing.JFrame;
+
 /**
  *
  * @author IFL08
  */
 public class BorrowDialog extends javax.swing.JFrame {
 
+    private long id;
+    private String title;
+    private int transaction;
+    private ResearchV frame;
+    
     /**
      * Creates new form BorrowDialog
      */
-    public BorrowDialog() {
+    public BorrowDialog(long id, String title, int transaction, JFrame frame, boolean modal) {
+        initComponents();
+        this.id = id;
+        this.title = title;
+        this.transaction = transaction;
+        this.frame = (ResearchV) frame;
+        
+        if(transaction == 1) {
+            jButton1.setText("Borrow");
+        } else {
+            ResearchController rc = new ResearchController();
+            txtName.setText(rc.getResearchBorrower(id));
+            txtName.setEditable(false);
+            jButton1.setText("Return");
+        }
+        
+        txtTitle.setText(title);
+    }
+    
+    public BorrowDialog(JFrame frame, boolean modal) {
         initComponents();
     }
 
@@ -45,6 +72,7 @@ public class BorrowDialog extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Name of Borrower");
 
+        txtTitle.setEditable(false);
         txtTitle.setBackground(new java.awt.Color(0, 153, 153));
         txtTitle.setBorder(null);
 
@@ -58,6 +86,11 @@ public class BorrowDialog extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Borrow");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(33, 33, 33));
 
@@ -125,6 +158,18 @@ public class BorrowDialog extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        ResearchController rc = new ResearchController();
+        boolean result = rc.borrowResearch(id, txtName.getText(), transaction);
+        if(result) {
+            int newTrans = (transaction == 1) ? 1 : 2;
+            frame.updateRowTransaction(newTrans);
+        }
+        
+        dispose();
+    }//GEN-LAST:event_jButton1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -155,7 +200,15 @@ public class BorrowDialog extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BorrowDialog().setVisible(true);
+                
+                BorrowDialog dialog = new BorrowDialog(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

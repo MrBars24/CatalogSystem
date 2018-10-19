@@ -75,9 +75,11 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
             resTitle.setText((String) rs.get("title"));
             resDesc.setText((String) rs.get("description"));
 
-            String[] authors = rs.get("author").toString().split(",");
-            for(String auth : authors) {
-                model.addElement(auth);
+            if(rs.get("author") != null) {
+                String[] authors = rs.get("author").toString().split(",");
+                for(String auth : authors) {
+                    model.addElement(auth);
+                }
             }
 
             DateFormat oDateFormat = new SimpleDateFormat("yyyy-MM-dd");

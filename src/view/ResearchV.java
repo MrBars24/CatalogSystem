@@ -19,10 +19,13 @@ import javax.swing.JDialog;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import static java.awt.image.ImageObserver.WIDTH;
 import java.util.Timer;
 import java.util.TimerTask;
 import model.Research;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -41,6 +44,19 @@ public class ResearchV extends javax.swing.JFrame {
         tm = (DefaultTableModel) jTable1.getModel();
         
         initList();
+        
+        jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            @Override
+            public void valueChanged(ListSelectionEvent lse) {
+                String val = (String) tm.getValueAt(jTable1.getSelectedRow(), 5);
+                System.out.println(val);
+                if(val.equals("1")) {
+                    borrow2.setVisible(false);
+                } else {
+                    borrow2.setVisible(true);
+                }
+            }
+        });
     }
     
     public void animatePanel(){
@@ -82,8 +98,9 @@ public class ResearchV extends javax.swing.JFrame {
                 jLabel2.setText("Research has been added");
                 animatePanel();
                 
-                String a[] = new String[5];
+                String a[] = new String[6];
                 String dtxt;
+                String trans = (rs.getString(6) == null) ? "" : rs.getString(6);
                 if(rs.getTimestamp(4) != null) {
                     Date dt = rs.getTimestamp(4);
                     dtxt = new SimpleDateFormat("MMM dd, YYYY").format(dt) + "";
@@ -96,6 +113,7 @@ public class ResearchV extends javax.swing.JFrame {
                 a[2] = rs.getString(3) + "";
                 a[3] = dtxt;
                 a[4] = rs.getString(5) + "";
+                a[5] = trans;
 
                 tm.addRow(a);
             }
@@ -112,7 +130,7 @@ public class ResearchV extends javax.swing.JFrame {
                 jLabel2.setText("Research has been updated");
                 animatePanel();
                 
-                String a[] = new String[5];
+                String a[] = new String[6];
                 String dtxt;
                 if(rs.getTimestamp(4) != null) {
                     Date dt = rs.getTimestamp(4);
@@ -126,6 +144,7 @@ public class ResearchV extends javax.swing.JFrame {
                 a[2] = rs.getString(3) + "";
                 a[3] = dtxt;
                 a[4] = rs.getString(5) + "";
+                a[5] = rs.getString(6) + "";
                 
                 int index = jTable1.getSelectedRow();
                 jTable1.setValueAt(a[0], index, 0);
@@ -137,6 +156,20 @@ public class ResearchV extends javax.swing.JFrame {
             }
         } catch (SQLException ex) {
             Logger.getLogger(ResearchV.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void updateRowTransaction(int trans)
+    {
+        tm.setValueAt(trans + "", jTable1.getSelectedRow(), 5);
+        if(trans == 1) {
+            borrow2.setVisible(false);
+            jLabel2.setText("Research has been borrowed");
+            animatePanel();
+        } else {
+            borrow2.setVisible(true);
+            jLabel2.setText("Research has been returned");
+            animatePanel();
         }
     }
     
@@ -156,9 +189,12 @@ public class ResearchV extends javax.swing.JFrame {
             tm.setColumnCount(0);
 
             // add specified columns to table
-            for (int i = 1; i <= columnCount; i++ ) {
-                tm.addColumn(rsmd.getColumnName(i));
-            }
+            tm.addColumn("Research ID");
+            tm.addColumn("Research Title");
+            tm.addColumn("Research Description");
+            tm.addColumn("Author");
+            tm.addColumn("Published Date");
+            tm.addColumn("Trans");
             
             // clear existing rows
             tm.setRowCount(0);
@@ -180,9 +216,11 @@ public class ResearchV extends javax.swing.JFrame {
                 a[2] = rs.getString(3) + "";
                 a[3] = dtxt;
                 a[4] = rs.getString(5) + "";
+                a[5] = rs.getString(6) + "";
                 
                 tm.addRow(a);
             }
+            jTable1.removeColumn(jTable1.getColumnModel().getColumn(5));
         } catch (SQLException ex) {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -228,6 +266,7 @@ public class ResearchV extends javax.swing.JFrame {
                 a[2] = rs.getString(3) + "";
                 a[3] = dtxt;
                 a[4] = rs.getString(5) + "";
+                a[5] = rs.getString(6) + "";
                 
                 tm.addRow(a);
             }
@@ -256,11 +295,11 @@ public class ResearchV extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         borrow2 = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        return1 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        borrow3 = new javax.swing.JPanel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -403,69 +442,39 @@ public class ResearchV extends javax.swing.JFrame {
                 borrow2MouseExited(evt);
             }
         });
+        borrow2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/open-book.png"))); // NOI18N
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/open-book.png"))); // NOI18N
+        borrow2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 0, -1, 50));
 
-        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel14.setText("Borrow");
-
-        return1.setBackground(new java.awt.Color(159, 204, 204));
-        return1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                return1MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                return1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                return1MouseExited(evt);
-            }
-        });
-
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/back-arrow.png"))); // NOI18N
-
-        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel12.setText("Return");
-
-        javax.swing.GroupLayout return1Layout = new javax.swing.GroupLayout(return1);
-        return1.setLayout(return1Layout);
-        return1Layout.setHorizontalGroup(
-            return1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(return1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(jLabel10)
-                .addGap(29, 29, 29)
-                .addComponent(jLabel12)
-                .addContainerGap(107, Short.MAX_VALUE))
-        );
-        return1Layout.setVerticalGroup(
-            return1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout borrow2Layout = new javax.swing.GroupLayout(borrow2);
-        borrow2.setLayout(borrow2Layout);
-        borrow2Layout.setHorizontalGroup(
-            borrow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(borrow2Layout.createSequentialGroup()
-                .addComponent(return1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel13)
-                .addGap(29, 29, 29)
-                .addComponent(jLabel14)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        borrow2Layout.setVerticalGroup(
-            borrow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, borrow2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(return1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel16.setText("Borrow Research");
+        borrow2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 0, -1, 50));
 
         jPanel1.add(borrow2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 230, -1));
+
+        borrow3.setBackground(new java.awt.Color(159, 204, 204));
+        borrow3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                borrow3MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                borrow3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                borrow3MouseExited(evt);
+            }
+        });
+        borrow3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/back-arrow.png"))); // NOI18N
+        borrow3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(37, 0, -1, 50));
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel18.setText("Return Research");
+        borrow3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, -3, -1, 50));
+
+        jPanel1.add(borrow3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 230, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 230, 480));
 
@@ -474,20 +483,20 @@ public class ResearchV extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Research ID", "Research Title", "Research Description", "Author", "Published Date"
+                "Research ID", "Research Title", "Research Description", "Author", "Published Date", "Transaction Type"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Long.class, java.lang.Long.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.Long.class, java.lang.Long.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                true, true, true, false, true
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -650,18 +659,6 @@ public class ResearchV extends javax.swing.JFrame {
         researchDialogSubmit.setVisible(true);
     }//GEN-LAST:event_jPanel6MouseClicked
 
-    private void return1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_return1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_return1MouseClicked
-
-    private void return1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_return1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_return1MouseEntered
-
-    private void return1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_return1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_return1MouseExited
-
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
         // TODO add your handling code here:
         if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -671,6 +668,15 @@ public class ResearchV extends javax.swing.JFrame {
 
     private void borrow2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrow2MouseClicked
         // TODO add your handling code here:
+        if(jTable1.getSelectedRows().length == 0) return;
+        
+        int index = jTable1.getSelectedRow();
+        int id = Integer.parseInt(jTable1.getModel().getValueAt(index, 0).toString());
+        String title = jTable1.getModel().getValueAt(index, 1).toString();
+        
+        BorrowDialog dialog = new BorrowDialog(id, title, 1, this, true);
+        dialog.setDefaultCloseOperation(dialog.DISPOSE_ON_CLOSE);
+        dialog.setVisible(true);
     }//GEN-LAST:event_borrow2MouseClicked
 
     private void borrow2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrow2MouseEntered
@@ -680,6 +686,27 @@ public class ResearchV extends javax.swing.JFrame {
     private void borrow2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrow2MouseExited
         // TODO add your handling code here:
     }//GEN-LAST:event_borrow2MouseExited
+
+    private void borrow3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrow3MouseClicked
+        // TODO add your handling code here:
+        if(jTable1.getSelectedRows().length == 0) return;
+        
+        int index = jTable1.getSelectedRow();
+        int id = Integer.parseInt(jTable1.getModel().getValueAt(index, 0).toString());
+        String title = jTable1.getModel().getValueAt(index, 1).toString();
+        
+        BorrowDialog dialog = new BorrowDialog(id, title, 2, this, true);
+        dialog.setDefaultCloseOperation(dialog.DISPOSE_ON_CLOSE);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_borrow3MouseClicked
+
+    private void borrow3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrow3MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_borrow3MouseEntered
+
+    private void borrow3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrow3MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_borrow3MouseExited
 
    
     /**
@@ -719,11 +746,12 @@ public class ResearchV extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel borrow2;
-    private javax.swing.JLabel jLabel10;
+    private javax.swing.JPanel borrow3;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -742,6 +770,5 @@ public class ResearchV extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JPanel return1;
     // End of variables declaration//GEN-END:variables
 }

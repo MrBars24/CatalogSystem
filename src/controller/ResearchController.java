@@ -35,7 +35,8 @@ public class ResearchController {
     
     public ResultSet getResearches(String search)
     {
-        String sql = "SELECT " + RESEARCH_FIELDS + " FROM researches LEFT JOIN keywords ON researches.id = researches.id "
+        String sql = "SELECT " + RESEARCH_FIELDS + ", (SELECT transaction_type FROM transaction WHERE transaction.research_id = researches.id ORDER BY created_at DESC LIMIT 1) as latest_transac"
+                + "FROM researches LEFT JOIN keywords ON researches.id = researches.id "
                 + "WHERE title LIKE ? OR keywords.keyword = ? GROUP BY researches.id";
         PreparedStatement stmt;
         ResultSet rs = null;
@@ -54,7 +55,8 @@ public class ResearchController {
     
     public ResultSet getResearches()
     {
-        String sql = "SELECT " + RESEARCH_FIELDS + " FROM researches";
+        String sql = "SELECT " + RESEARCH_FIELDS + ", (SELECT transaction_type FROM transaction WHERE transaction.research_id = researches.id ORDER BY created_at DESC LIMIT 1) as latest_transac FROM researches";
+        System.out.println(sql);
         Statement stmt;
         ResultSet rs = null;
         
@@ -70,7 +72,7 @@ public class ResearchController {
     
     public ResultSet getResearch(long id)
     {
-        String sql = "SELECT " + RESEARCH_FIELDS + " FROM researches where id = ? ";
+        String sql = "SELECT " + RESEARCH_FIELDS + ", (SELECT transaction_type FROM transaction WHERE transaction.research_id = researches.id ORDER BY created_at DESC LIMIT 1) as latest_transac FROM researches where id = ? ";
         PreparedStatement stmt;
         ResultSet rs = null;
         
@@ -88,7 +90,7 @@ public class ResearchController {
     public HashMap getResearchMap(long id) {
         HashMap hash = new HashMap();
         
-        String sql = "SELECT " + RESEARCH_FIELDS + " FROM researches where id = ? ";
+        String sql = "SELECT " + RESEARCH_FIELDS + ", (SELECT transaction_type FROM transaction WHERE transaction.research_id = researches.id ORDER BY created_at DESC LIMIT 1) as latest_transac FROM researches where id = ? ";
         PreparedStatement stmt;
         ResultSet rs = null;
         
@@ -104,6 +106,7 @@ public class ResearchController {
             stmt = conn.prepareStatement(sql);
             stmt.setLong(1, id);
             rs = stmt.executeQuery();
+            System.out.println(stmt.toString());
             
             while(rs.next()) {
                 hash.put("id", rs.getInt(1));
@@ -219,6 +222,46 @@ public class ResearchController {
             int[] keyword = stmt.executeBatch();
             stmtResearch.executeBatch();
             return keyword;
+        } catch (SQLException ex) {
+            Logger.getLogger(ResearchController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
+    }
+    
+    public boolean borrowResearch(long id, String name, int transaction)
+    {
+        boolean isSuccess = false;
+        try {   
+            String sql = "INSERT INTO transaction(research_id, name, transaction_type) VALUES(?, ?, ?)";
+            PreparedStatement stmt;
+            
+            stmt = conn.prepareStatement(sql);
+            stmt.setLong(1, id);
+            stmt.setString(2, name);
+            stmt.setInt(3, transaction);
+            if(stmt.executeUpdate() > 0) {
+                isSuccess = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ResearchController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return isSuccess;
+    }
+    
+    public String getResearchBorrower(long id)
+    {
+        String sql = "SELECT name FROM transaction WHERE research_id = ? ORDER BY created_at DESC";
+        PreparedStatement stmt;
+        ResultSet rs = null;
+        
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setLong(1, id);
+            rs = stmt.executeQuery();
+            if(rs.next()) {
+                return rs.getString(1);
+            }
         } catch (SQLException ex) {
             Logger.getLogger(ResearchController.class.getName()).log(Level.SEVERE, null, ex);
         }
