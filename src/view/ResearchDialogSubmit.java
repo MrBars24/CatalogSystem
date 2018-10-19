@@ -579,8 +579,7 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
 
     private void cancel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancel1MouseClicked
         // TODO add your handling code here:
-        
-        
+        this.setVisible(false);
     }//GEN-LAST:event_cancel1MouseClicked
 
     /**

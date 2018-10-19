@@ -255,7 +255,10 @@ public class ResearchV extends javax.swing.JFrame {
         jPanel6 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        borrow1 = new javax.swing.JPanel();
+        borrow2 = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        return1 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -388,42 +391,81 @@ public class ResearchV extends javax.swing.JFrame {
 
         jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 230, -1));
 
-        borrow1.setBackground(new java.awt.Color(159, 204, 204));
-        borrow1.addMouseListener(new java.awt.event.MouseAdapter() {
+        borrow2.setBackground(new java.awt.Color(159, 204, 204));
+        borrow2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                borrow1MouseClicked(evt);
+                borrow2MouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                borrow1MouseEntered(evt);
+                borrow2MouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                borrow1MouseExited(evt);
+                borrow2MouseExited(evt);
             }
         });
 
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/open-book.png"))); // NOI18N
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/open-book.png"))); // NOI18N
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel14.setText("Borrow");
+
+        return1.setBackground(new java.awt.Color(159, 204, 204));
+        return1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                return1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                return1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                return1MouseExited(evt);
+            }
+        });
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/back-arrow.png"))); // NOI18N
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel12.setText("Borrow");
+        jLabel12.setText("Return");
 
-        javax.swing.GroupLayout borrow1Layout = new javax.swing.GroupLayout(borrow1);
-        borrow1.setLayout(borrow1Layout);
-        borrow1Layout.setHorizontalGroup(
-            borrow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(borrow1Layout.createSequentialGroup()
+        javax.swing.GroupLayout return1Layout = new javax.swing.GroupLayout(return1);
+        return1.setLayout(return1Layout);
+        return1Layout.setHorizontalGroup(
+            return1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(return1Layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(jLabel10)
                 .addGap(29, 29, 29)
                 .addComponent(jLabel12)
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
         );
-        borrow1Layout.setVerticalGroup(
-            borrow1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        return1Layout.setVerticalGroup(
+            return1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
             .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanel1.add(borrow1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 230, -1));
+        javax.swing.GroupLayout borrow2Layout = new javax.swing.GroupLayout(borrow2);
+        borrow2.setLayout(borrow2Layout);
+        borrow2Layout.setHorizontalGroup(
+            borrow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(borrow2Layout.createSequentialGroup()
+                .addComponent(return1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel13)
+                .addGap(29, 29, 29)
+                .addComponent(jLabel14)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        borrow2Layout.setVerticalGroup(
+            borrow2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, borrow2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(return1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jPanel1.add(borrow2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 230, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 230, 480));
 
@@ -608,17 +650,17 @@ public class ResearchV extends javax.swing.JFrame {
         researchDialogSubmit.setVisible(true);
     }//GEN-LAST:event_jPanel6MouseClicked
 
-    private void borrow1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrow1MouseClicked
+    private void return1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_return1MouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_borrow1MouseClicked
+    }//GEN-LAST:event_return1MouseClicked
 
-    private void borrow1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrow1MouseEntered
+    private void return1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_return1MouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_borrow1MouseEntered
+    }//GEN-LAST:event_return1MouseEntered
 
-    private void borrow1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrow1MouseExited
+    private void return1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_return1MouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_borrow1MouseExited
+    }//GEN-LAST:event_return1MouseExited
 
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
         // TODO add your handling code here:
@@ -626,6 +668,18 @@ public class ResearchV extends javax.swing.JFrame {
             initList(jTextField1.getText());
         }
     }//GEN-LAST:event_jTextField1KeyPressed
+
+    private void borrow2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrow2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_borrow2MouseClicked
+
+    private void borrow2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrow2MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_borrow2MouseEntered
+
+    private void borrow2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrow2MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_borrow2MouseExited
 
    
     /**
@@ -664,10 +718,12 @@ public class ResearchV extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel borrow1;
+    private javax.swing.JPanel borrow2;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -686,5 +742,6 @@ public class ResearchV extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JPanel return1;
     // End of variables declaration//GEN-END:variables
 }
