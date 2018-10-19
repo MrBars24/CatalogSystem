@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.util.Timer;
 import java.util.TimerTask;
 import model.Research;
@@ -146,6 +147,54 @@ public class ResearchV extends javax.swing.JFrame {
         // get columns info
         ResultSetMetaData rsmd;
         ResultSet rs = rControl.getResearches();
+        
+        try {
+            rsmd = rs.getMetaData();
+            int columnCount = rsmd.getColumnCount();
+
+            // clear existing columns 
+            tm.setColumnCount(0);
+
+            // add specified columns to table
+            for (int i = 1; i <= columnCount; i++ ) {
+                tm.addColumn(rsmd.getColumnName(i));
+            }
+            
+            // clear existing rows
+            tm.setRowCount(0);
+
+            // add rows to table
+            while (rs.next()) {
+                String[] a = new String[columnCount];
+                String dtxt;
+                
+                if(rs.getTimestamp(4) != null) {
+                    Date dt = rs.getTimestamp(4);
+                    dtxt = new SimpleDateFormat("MMM dd, YYYY").format(dt) + "";
+                } else {
+                    dtxt = "";
+                }
+                
+                a[0] = rs.getInt(1) + "";
+                a[1] = rs.getString(2) + "";
+                a[2] = rs.getString(3) + "";
+                a[3] = dtxt;
+                a[4] = rs.getString(5) + "";
+                
+                tm.addRow(a);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void initList(String search)
+    {
+        ResearchController rControl = new ResearchController();
+                
+        // get columns info
+        ResultSetMetaData rsmd;
+        ResultSet rs = rControl.getResearches(search);
         
         try {
             rsmd = rs.getMetaData();
@@ -426,6 +475,11 @@ public class ResearchV extends javax.swing.JFrame {
                 jTextField1ActionPerformed(evt);
             }
         });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField1KeyPressed(evt);
+            }
+        });
         jPanel3.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, 210, -1));
 
         jPanel7.setBackground(new java.awt.Color(0, 153, 153));
@@ -565,6 +619,13 @@ public class ResearchV extends javax.swing.JFrame {
     private void borrow1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrow1MouseExited
         // TODO add your handling code here:
     }//GEN-LAST:event_borrow1MouseExited
+
+    private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            initList(jTextField1.getText());
+        }
+    }//GEN-LAST:event_jTextField1KeyPressed
 
    
     /**

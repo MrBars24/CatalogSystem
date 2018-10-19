@@ -26,11 +26,30 @@ import model.Research;
 public class ResearchController {
     
     private Connection conn;
-    private final String RESEARCH_FIELDS = " `id`, `title`, `author`, `publish_at`, `description` ";
+    private final String RESEARCH_FIELDS = " `researches`.`id`, `title`, `author`, `publish_at`, `description` ";
     
     public ResearchController()
     {
         conn = DBHelper.connect();
+    }
+    
+    public ResultSet getResearches(String search)
+    {
+        String sql = "SELECT " + RESEARCH_FIELDS + " FROM researches LEFT JOIN keywords ON researches.id = researches.id "
+                + "WHERE title LIKE ? OR keywords.keyword = ? GROUP BY researches.id";
+        PreparedStatement stmt;
+        ResultSet rs = null;
+        
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, "%" + search + "%");
+            stmt.setString(2, search);
+            rs = stmt.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(ResearchController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return rs;
     }
     
     public ResultSet getResearches()
@@ -197,8 +216,9 @@ public class ResearchController {
                 stmtResearch.addBatch();
             }
             
+            int[] keyword = stmt.executeBatch();
             stmtResearch.executeBatch();
-            return stmt.executeBatch();
+            return keyword;
         } catch (SQLException ex) {
             Logger.getLogger(ResearchController.class.getName()).log(Level.SEVERE, null, ex);
         }
