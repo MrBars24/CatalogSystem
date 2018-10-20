@@ -48,12 +48,13 @@ public class ResearchV extends javax.swing.JFrame {
         jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             @Override
             public void valueChanged(ListSelectionEvent lse) {
-                String val = (String) tm.getValueAt(jTable1.getSelectedRow(), 5);
-                System.out.println(val);
-                if(val.equals("1")) {
-                    borrow2.setVisible(false);
-                } else {
-                    borrow2.setVisible(true);
+                if(jTable1.getSelectedRows().length > 0) {
+                    String val = (String) tm.getValueAt(jTable1.getSelectedRow(), 5);
+                    if(val.equals("1")) {
+                        borrow2.setVisible(false);
+                    } else {
+                        borrow2.setVisible(true);
+                    }
                 }
             }
         });
@@ -626,6 +627,7 @@ public class ResearchV extends javax.swing.JFrame {
         int[] res = researchController.deleteResearch(id);
         
         if(res.length > 0) {
+            jTable1.getSelectionModel().clearSelection();
             for (int j = index.length - 1; j >= 0; j--) {
                 tm.removeRow(index[j]);
             }
