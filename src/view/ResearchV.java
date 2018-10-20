@@ -683,10 +683,14 @@ public class ResearchV extends javax.swing.JFrame {
 
     private void borrow2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrow2MouseEntered
         // TODO add your handling code here:
+        borrow2.setOpaque(true);
+        borrow2.setBackground(new Color(149, 191, 191));   
     }//GEN-LAST:event_borrow2MouseEntered
 
     private void borrow2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrow2MouseExited
         // TODO add your handling code here:
+        borrow2.setOpaque(true);
+        borrow2.setBackground(new Color(159,204,204));   
     }//GEN-LAST:event_borrow2MouseExited
 
     private void borrow3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrow3MouseClicked
@@ -704,10 +708,14 @@ public class ResearchV extends javax.swing.JFrame {
 
     private void borrow3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrow3MouseEntered
         // TODO add your handling code here:
+        borrow3.setOpaque(true);
+        borrow3.setBackground(new Color(149, 191, 191));   
     }//GEN-LAST:event_borrow3MouseEntered
 
     private void borrow3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrow3MouseExited
         // TODO add your handling code here:
+        borrow3.setOpaque(true);
+        borrow3.setBackground(new Color(159,204,204));   
     }//GEN-LAST:event_borrow3MouseExited
 
    
