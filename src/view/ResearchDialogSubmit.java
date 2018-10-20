@@ -22,6 +22,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
 import model.Keyword;
 import model.Research;
+import java.util.Date;
 
 
 /**
@@ -38,11 +39,13 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
     /**
      * Creates new form ResearchDialogSubmit
      */
+    
     public ResearchDialogSubmit(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         rs = (ResearchV) parent;
         type = "add";
         initComponents();
+        showDate();
         
         model = new DefaultListModel();
         keyModel = new DefaultListModel();
@@ -91,6 +94,12 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
                 keyModel.add(i, key.get(i));
             }
         }
+    }
+    
+    public void showDate(){
+        Date d = new Date();
+        SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
+        jXDatePicker1.setDate(d);
     }
 
     /**
@@ -242,6 +251,11 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
         jLabel2.setInheritsPopupMenu(false);
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/left.png"))); // NOI18N
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -548,6 +562,8 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
         // TODO add your handling code here
 
         jXDatePicker1.setBackground(Color.red);
+        
+        
     }//GEN-LAST:event_jXDatePicker1ActionPerformed
 
     private void resDescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resDescActionPerformed
@@ -583,6 +599,12 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.setVisible(false);
     }//GEN-LAST:event_cancel1MouseClicked
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        // TODO add your handling code here:
+        this.setVisible(false);
+        
+    }//GEN-LAST:event_jLabel3MouseClicked
 
     /**
      * @param args the command line arguments
