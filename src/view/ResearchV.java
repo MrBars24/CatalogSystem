@@ -286,7 +286,7 @@ public class ResearchV extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
+        delete = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -301,6 +301,9 @@ public class ResearchV extends javax.swing.JFrame {
         borrow3 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        logs = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -319,17 +322,17 @@ public class ResearchV extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(0, 153, 153));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel4.setBackground(new java.awt.Color(159, 204, 204));
-        jPanel4.setEnabled(false);
-        jPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
+        delete.setBackground(new java.awt.Color(159, 204, 204));
+        delete.setEnabled(false);
+        delete.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel4MouseClicked(evt);
+                deleteMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jPanel4MouseEntered(evt);
+                deleteMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jPanel4MouseExited(evt);
+                deleteMouseExited(evt);
             }
         });
 
@@ -338,24 +341,24 @@ public class ResearchV extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Delete Research");
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout deleteLayout = new javax.swing.GroupLayout(delete);
+        delete.setLayout(deleteLayout);
+        deleteLayout.setHorizontalGroup(
+            deleteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(deleteLayout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(jLabel4)
                 .addGap(28, 28, 28)
                 .addComponent(jLabel5)
                 .addContainerGap(52, Short.MAX_VALUE))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        deleteLayout.setVerticalGroup(
+            deleteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 230, -1));
+        jPanel1.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 230, -1));
 
         jPanel5.setBackground(new java.awt.Color(159, 204, 204));
         jPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -476,6 +479,44 @@ public class ResearchV extends javax.swing.JFrame {
         borrow3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, -3, -1, 50));
 
         jPanel1.add(borrow3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 230, -1));
+
+        logs.setBackground(new java.awt.Color(159, 204, 204));
+        logs.setEnabled(false);
+        logs.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logsMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                logsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                logsMouseExited(evt);
+            }
+        });
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/folder.png"))); // NOI18N
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel12.setText("Logs");
+
+        javax.swing.GroupLayout logsLayout = new javax.swing.GroupLayout(logs);
+        logs.setLayout(logsLayout);
+        logsLayout.setHorizontalGroup(
+            logsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(logsLayout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(jLabel10)
+                .addGap(28, 28, 28)
+                .addComponent(jLabel12)
+                .addContainerGap(121, Short.MAX_VALUE))
+        );
+        logsLayout.setVerticalGroup(
+            logsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(logs, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 230, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 230, 480));
 
@@ -602,7 +643,7 @@ public class ResearchV extends javax.swing.JFrame {
         jPanel6.setBackground(new Color(159,204,204));
     }//GEN-LAST:event_jPanel6MouseExited
 
-    private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
+    private void deleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseClicked
         // TODO add your handling code here:
         if(jTable1.getSelectedRows().length == 0) return;
         int dialogButton = JOptionPane.YES_NO_OPTION;
@@ -635,19 +676,19 @@ public class ResearchV extends javax.swing.JFrame {
             jLabel2.setText("Research has been deleted");
             animatePanel();
         }
-    }//GEN-LAST:event_jPanel4MouseClicked
+    }//GEN-LAST:event_deleteMouseClicked
 
-    private void jPanel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseEntered
+    private void deleteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseEntered
         // TODO add your handling code here:
-        jPanel4.setOpaque(true);
-        jPanel4.setBackground(new Color(149, 191, 191));
-    }//GEN-LAST:event_jPanel4MouseEntered
+        delete.setOpaque(true);
+        delete.setBackground(new Color(149, 191, 191));
+    }//GEN-LAST:event_deleteMouseEntered
 
-    private void jPanel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseExited
+    private void deleteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseExited
         // TODO add your handling code here:
-        jPanel4.setOpaque(true);
-        jPanel4.setBackground(new Color(159,204,204));
-    }//GEN-LAST:event_jPanel4MouseExited
+        delete.setOpaque(true);
+        delete.setBackground(new Color(159,204,204));
+    }//GEN-LAST:event_deleteMouseExited
 
     private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
         // TODO add your handling code here:
@@ -718,6 +759,22 @@ public class ResearchV extends javax.swing.JFrame {
         borrow3.setBackground(new Color(159,204,204));   
     }//GEN-LAST:event_borrow3MouseExited
 
+    private void logsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logsMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_logsMouseClicked
+
+    private void logsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logsMouseEntered
+        // TODO add your handling code here:
+        logs.setOpaque(true);
+        logs.setBackground(new Color(149, 191, 191));
+    }//GEN-LAST:event_logsMouseEntered
+
+    private void logsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logsMouseExited
+        // TODO add your handling code here:
+        logs.setOpaque(true);
+        logs.setBackground(new Color(159,204,204));
+    }//GEN-LAST:event_logsMouseExited
+
    
     /**
      * @param args the command line arguments
@@ -757,7 +814,10 @@ public class ResearchV extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel borrow2;
     private javax.swing.JPanel borrow3;
+    private javax.swing.JPanel delete;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -772,7 +832,6 @@ public class ResearchV extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -780,5 +839,6 @@ public class ResearchV extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JPanel logs;
     // End of variables declaration//GEN-END:variables
 }
