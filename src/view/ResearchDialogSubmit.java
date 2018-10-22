@@ -35,6 +35,7 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
     private long uid = 0;
     DefaultListModel model;
     DefaultListModel keyModel;
+    private ResearchController rc;
     
     /**
      * Creates new form ResearchDialogSubmit
@@ -42,6 +43,8 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
     
     public ResearchDialogSubmit(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        rc = new ResearchController();
+        
         rs = (ResearchV) parent;
         type = "add";
         initComponents();
@@ -56,6 +59,8 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
     
     public ResearchDialogSubmit(long id, java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        rc = new ResearchController();
+        
         rs = (ResearchV) parent;
         type = "edit";
         uid = id;
@@ -71,7 +76,6 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
     
     public void populateForm()
     {
-        ResearchController rc = new ResearchController();
         HashMap rs = rc.getResearchMap(uid);
 
         if(rs.size() > 0) {
@@ -521,15 +525,14 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
         Timestamp publish = new Timestamp(jXDatePicker1.getDate().getTime());
         
         Research research = new Research(title, description, String.join(",", authors), publish, keyword);
-        ResearchController researchController = new ResearchController();
         
         if(this.type == "add") {
-            ResultSet r = researchController.addResearch(research);
+            ResultSet r = rc.addResearch(research);
             rs.appendResearch(r);
             dispose();
         } else {
             research.setId(uid);
-            ResultSet r = researchController.updateResearch(research);
+            ResultSet r = rc.updateResearch(research);
             rs.updateRow(r);
             dispose();         
         }

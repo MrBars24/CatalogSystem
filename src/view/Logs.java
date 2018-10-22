@@ -5,17 +5,79 @@
  */
 package view;
 
+import controller.ResearchController;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author IFL08
  */
 public class Logs extends javax.swing.JFrame {
-
+    private ResearchV frame;
+    private long id;
+    private String title;
+    private ResearchController rc;
+    private DefaultTableModel tm;
+    
     /**
      * Creates new form Logs
      */
     public Logs() {
         initComponents();
+    }
+    
+    public Logs(long id, String title, JFrame frame) {
+        initComponents();
+        rc = new ResearchController();
+        tm = (DefaultTableModel) jTable1.getModel();
+        
+        this.frame = (ResearchV) frame;
+        this.id = id;
+        this.title = title;
+        initList();
+    }
+    
+    public void initList()
+    {
+        // get columns info
+        ResultSetMetaData rsmd;
+        ResultSet rs = rc.getTransactionLogs(id);
+        
+        try {
+            rsmd = rs.getMetaData();
+            int columnCount = rsmd.getColumnCount();
+
+            // clear existing columns 
+            tm.setColumnCount(0);
+
+            // add specified columns to table
+            tm.addColumn("Name");
+            tm.addColumn("Transaction");
+            tm.addColumn("Date");
+            
+            // clear existing rows
+            tm.setRowCount(0);
+
+            // add rows to table
+            while (rs.next()) {
+                String[] a = new String[columnCount];
+                a[0] = rs.getString(1) + "";
+                a[1] = rs.getString(2) + "";
+                a[2] = rs.getString(3) + "";
+                
+                tm.addRow(a);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -40,17 +102,17 @@ public class Logs extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "ID", "Title", "Date Borrowed", "Date Returned"
+                "Title", "Date Borrowed", "Date Returned"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Long.class, java.lang.String.class, java.lang.String.class
+                java.lang.Long.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {

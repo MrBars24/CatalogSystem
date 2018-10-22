@@ -18,21 +18,23 @@ public class BorrowDialog extends javax.swing.JFrame {
     private String title;
     private int transaction;
     private ResearchV frame;
+    private ResearchController rc;
     
     /**
      * Creates new form BorrowDialog
      */
     public BorrowDialog(long id, String title, int transaction, JFrame frame, boolean modal) {
         initComponents();
+        
         this.id = id;
         this.title = title;
         this.transaction = transaction;
         this.frame = (ResearchV) frame;
+        rc = new ResearchController();
         
         if(transaction == 1) {
             jButton1.setText("Borrow");
         } else {
-            ResearchController rc = new ResearchController();
             txtName.setText(rc.getResearchBorrower(id));
             txtName.setEditable(false);
             jButton1.setText("Return");
@@ -181,7 +183,6 @@ public class BorrowDialog extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-        ResearchController rc = new ResearchController();
         boolean result = rc.borrowResearch(id, txtName.getText(), transaction);
         if(result) {
             int newTrans = (transaction == 1) ? 1 : 2;

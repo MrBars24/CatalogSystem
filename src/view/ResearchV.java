@@ -34,6 +34,7 @@ import javax.swing.event.ListSelectionListener;
 public class ResearchV extends javax.swing.JFrame {
 
     private DefaultTableModel tm;
+    protected ResearchController rControl;
     
     /**
      * Creates new form Research
@@ -41,6 +42,7 @@ public class ResearchV extends javax.swing.JFrame {
     public ResearchV() {
         initComponents();
         
+        rControl = new ResearchController();
         tm = (DefaultTableModel) jTable1.getModel();
         
         initList();
@@ -176,7 +178,7 @@ public class ResearchV extends javax.swing.JFrame {
     
     public void initList()
     {
-        ResearchController rControl = new ResearchController();
+        
                 
         // get columns info
         ResultSetMetaData rsmd;
@@ -229,8 +231,6 @@ public class ResearchV extends javax.swing.JFrame {
     
     public void initList(String search)
     {
-        ResearchController rControl = new ResearchController();
-                
         // get columns info
         ResultSetMetaData rsmd;
         ResultSet rs = rControl.getResearches(search);
@@ -664,8 +664,7 @@ public class ResearchV extends javax.swing.JFrame {
             i++;
         }
         
-        ResearchController researchController = new ResearchController();
-        int[] res = researchController.deleteResearch(id);
+        int[] res = rControl.deleteResearch(id);
         
         if(res.length > 0) {
             jTable1.getSelectionModel().clearSelection();
@@ -761,6 +760,15 @@ public class ResearchV extends javax.swing.JFrame {
 
     private void logsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logsMouseClicked
         // TODO add your handling code here:
+        if(jTable1.getSelectedRows().length == 0) return;
+        
+        int index = jTable1.getSelectedRow();
+        int id = Integer.parseInt(jTable1.getModel().getValueAt(index, 0).toString());
+        String title = jTable1.getModel().getValueAt(index, 1).toString();
+        
+        Logs dialog = new Logs(id, title, this);
+        dialog.setDefaultCloseOperation(dialog.DISPOSE_ON_CLOSE);
+        dialog.setVisible(true);
     }//GEN-LAST:event_logsMouseClicked
 
     private void logsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logsMouseEntered

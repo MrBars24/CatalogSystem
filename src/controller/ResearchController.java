@@ -268,4 +268,25 @@ public class ResearchController {
         
         return null;
     }
+    
+    public ResultSet getTransactionLogs(long id)
+    {
+        String sql = "SELECT transaction.name, "
+                + "IF(transaction.transaction_type = 1, 'Borrowed', 'Returned') as transaction_type, "
+                + "CONCAT(MONTHNAME(transaction.created_at), ' ', DAY(transaction.created_at), ', ', YEAR(transaction.created_at)) AS transaction_date"
+                + " FROM transaction INNER JOIN researches ON transaction.research_id = researches.id"
+                + " WHERE transaction.research_id = ?";
+        PreparedStatement stmt;
+        ResultSet rs = null;
+        
+        try {
+            stmt = conn.prepareStatement(sql);
+            stmt.setLong(1, id);
+            rs = stmt.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(ResearchController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return rs;
+    }
 }
