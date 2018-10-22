@@ -243,9 +243,12 @@ public class ResearchV extends javax.swing.JFrame {
             tm.setColumnCount(0);
 
             // add specified columns to table
-            for (int i = 1; i <= columnCount; i++ ) {
-                tm.addColumn(rsmd.getColumnName(i));
-            }
+            tm.addColumn("Research ID");
+            tm.addColumn("Research Title");
+            tm.addColumn("Research Description");
+            tm.addColumn("Author");
+            tm.addColumn("Published Date");
+            tm.addColumn("Trans");
             
             // clear existing rows
             tm.setRowCount(0);
@@ -271,6 +274,7 @@ public class ResearchV extends javax.swing.JFrame {
                 
                 tm.addRow(a);
             }
+            jTable1.removeColumn(jTable1.getColumnModel().getColumn(5));
         } catch (SQLException ex) {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }

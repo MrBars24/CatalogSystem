@@ -5,7 +5,11 @@
  */
 package view;
 import controller.UserController;
+import dev.DBHelper;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author IFL08
@@ -20,6 +24,7 @@ public class Login extends javax.swing.JFrame {
         overlay.setBackground(new Color(52, 76, 28,200));
         noti.setBackground(new Color(0,153,153,150));
         noti.setVisible(false);
+        DBHelper.connect();
     }
     
     public void login()

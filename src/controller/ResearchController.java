@@ -35,16 +35,21 @@ public class ResearchController {
     
     public ResultSet getResearches(String search)
     {
-        String sql = "SELECT " + RESEARCH_FIELDS + ", (SELECT transaction_type FROM transaction WHERE transaction.research_id = researches.id ORDER BY created_at DESC LIMIT 1) as latest_transac"
+        String sql = "SELECT " + RESEARCH_FIELDS + ", (SELECT transaction_type FROM transaction WHERE transaction.research_id = researches.id ORDER BY created_at DESC LIMIT 1) as latest_transac "
                 + "FROM researches LEFT JOIN keywords ON researches.id = researches.id "
-                + "WHERE title LIKE ? OR keywords.keyword = ? GROUP BY researches.id";
+                + "WHERE title LIKE ? OR keywords.keyword IN(" + buildParams(search) + ") GROUP BY keywords.research_id";
         PreparedStatement stmt;
         ResultSet rs = null;
         
         try {
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1, "%" + search + "%");
-            stmt.setString(2, search);
+            stmt.setString(1, search + "%");
+            
+            String[] s = search.split(",");
+            for(int i = 2; i < s.length + 2; i++) {
+                stmt.setString(i, s[i - 2].trim());
+            }
+            
             rs = stmt.executeQuery();
         } catch (SQLException ex) {
             Logger.getLogger(ResearchController.class.getName()).log(Level.SEVERE, null, ex);
@@ -56,7 +61,6 @@ public class ResearchController {
     public ResultSet getResearches()
     {
         String sql = "SELECT " + RESEARCH_FIELDS + ", (SELECT transaction_type FROM transaction WHERE transaction.research_id = researches.id ORDER BY created_at DESC LIMIT 1) as latest_transac FROM researches";
-        System.out.println(sql);
         Statement stmt;
         ResultSet rs = null;
         
@@ -288,5 +292,19 @@ public class ResearchController {
         }
         
         return rs;
+    }
+    
+    // helpers
+    private String buildParams(String sql)
+    {
+        String[] params = sql.split(",");
+        StringBuilder build = new StringBuilder();
+        for(int i = 0; i < params.length; i++) {
+            build.append(",?");
+        }
+        
+        build.deleteCharAt(0);
+        
+        return build.toString();
     }
 }
