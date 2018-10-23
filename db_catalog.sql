@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 05, 2018 at 08:28 AM
+-- Generation Time: Oct 19, 2018 at 11:29 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 5.6.37
 
@@ -34,6 +34,14 @@ CREATE TABLE `keywords` (
   `keyword` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `keywords`
+--
+
+INSERT INTO `keywords` (`id`, `research_id`, `keyword`) VALUES
+(1, 1, 'Test'),
+(2, 1, 'Research');
+
 -- --------------------------------------------------------
 
 --
@@ -55,14 +63,7 @@ CREATE TABLE `researches` (
 --
 
 INSERT INTO `researches` (`id`, `title`, `author`, `description`, `publish_at`, `created_at`, `updated_at`) VALUES
-(1, 'TEST ', 'TEST AUTHOR', NULL, '2018-10-05 03:45:21', '2018-10-05 03:45:18', '2018-10-05 03:45:24'),
-(2, 'test title', NULL, 'Authors', NULL, '2018-10-05 04:15:04', NULL),
-(3, 'test title', NULL, 'Authors', NULL, '2018-10-05 04:31:16', '2018-10-05 04:31:16'),
-(4, 'test title', NULL, 'Authors', NULL, '2018-10-05 04:31:46', '2018-10-05 04:31:46'),
-(5, 'test title', NULL, 'Authors', NULL, '2018-10-05 05:40:45', '2018-10-05 05:40:45'),
-(6, 'test title', NULL, 'Authors', NULL, '2018-10-05 05:53:58', '2018-10-05 05:53:58'),
-(7, 'test title', NULL, 'Authors', NULL, '2018-10-05 05:54:47', '2018-10-05 05:54:47'),
-(8, 'test title', NULL, 'Authors', NULL, '2018-10-05 05:55:41', '2018-10-05 05:55:41');
+(1, 'Test Research', 'Me', 'Test Description', '2018-10-18 16:00:00', '2018-10-19 09:28:44', '2018-10-19 09:28:44');
 
 -- --------------------------------------------------------
 
@@ -91,6 +92,13 @@ CREATE TABLE `users` (
   `username` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `username`, `password`) VALUES
+(1, 'Test', 'test', 'test');
 
 --
 -- Indexes for dumped tables
@@ -130,19 +138,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `keywords`
 --
 ALTER TABLE `keywords`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `researches`
 --
 ALTER TABLE `researches`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `transaction`
+--
+ALTER TABLE `transaction`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
