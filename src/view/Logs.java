@@ -42,6 +42,7 @@ public class Logs extends javax.swing.JFrame {
         this.frame = (ResearchV) frame;
         this.id = id;
         this.title = title;
+        Title.setText(this.title);
         initList();
     }
     
@@ -130,6 +131,11 @@ public class Logs extends javax.swing.JFrame {
         jLabel1.setText("LOGS");
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/left.png"))); // NOI18N
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -197,6 +203,11 @@ public class Logs extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jLabel3MouseClicked
 
     /**
      * @param args the command line arguments
