@@ -708,7 +708,11 @@ public class ResearchV extends javax.swing.JFrame {
     private void jTextField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyPressed
         // TODO add your handling code here:
         if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            initList(jTextField1.getText());
+            if(jTextField1.getText().equals("")) {
+                initList();
+            } else {
+                initList(jTextField1.getText());
+            }
         }
     }//GEN-LAST:event_jTextField1KeyPressed
 
