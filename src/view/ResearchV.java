@@ -308,6 +308,10 @@ public class ResearchV extends javax.swing.JFrame {
         logs = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -317,6 +321,10 @@ public class ResearchV extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        totalres = new javax.swing.JLabel();
+        clear = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(33, 33, 33));
@@ -327,6 +335,7 @@ public class ResearchV extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         delete.setBackground(new java.awt.Color(159, 204, 204));
+        delete.setToolTipText("Delete Research");
         delete.setEnabled(false);
         delete.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -365,6 +374,7 @@ public class ResearchV extends javax.swing.JFrame {
         jPanel1.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 230, -1));
 
         jPanel5.setBackground(new java.awt.Color(159, 204, 204));
+        jPanel5.setToolTipText("Add Research");
         jPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel5MouseClicked(evt);
@@ -402,6 +412,7 @@ public class ResearchV extends javax.swing.JFrame {
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 230, -1));
 
         jPanel6.setBackground(new java.awt.Color(159, 204, 204));
+        jPanel6.setToolTipText("Edit Research");
         jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel6MouseClicked(evt);
@@ -439,6 +450,7 @@ public class ResearchV extends javax.swing.JFrame {
         jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 230, -1));
 
         borrow2.setBackground(new java.awt.Color(159, 204, 204));
+        borrow2.setToolTipText("Borrow Research");
         borrow2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 borrow2MouseClicked(evt);
@@ -459,7 +471,7 @@ public class ResearchV extends javax.swing.JFrame {
         jLabel16.setText("Borrow Research");
         borrow2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 0, -1, 50));
 
-        jPanel1.add(borrow2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 230, -1));
+        jPanel1.add(borrow2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 230, -1));
 
         borrow3.setBackground(new java.awt.Color(159, 204, 204));
         borrow3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -482,9 +494,10 @@ public class ResearchV extends javax.swing.JFrame {
         jLabel18.setText("Return Research");
         borrow3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, -3, -1, 50));
 
-        jPanel1.add(borrow3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 230, -1));
+        jPanel1.add(borrow3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 230, -1));
 
         logs.setBackground(new java.awt.Color(159, 204, 204));
+        logs.setToolTipText("Logs");
         logs.setEnabled(false);
         logs.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -520,13 +533,70 @@ public class ResearchV extends javax.swing.JFrame {
             .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanel1.add(logs, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 230, -1));
+        jPanel1.add(logs, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 230, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 230, 480));
+        jPanel2.setBackground(new java.awt.Color(51, 51, 51));
+
+        jPanel4.setBackground(new java.awt.Color(51, 51, 51));
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setText("MENU");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 230, 80));
+
+        jPanel8.setBackground(new java.awt.Color(51, 51, 51));
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 230, Short.MAX_VALUE)
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 230, 10));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 230, 500));
 
         jPanel3.setBackground(new java.awt.Color(33, 33, 33));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jTable1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -553,16 +623,16 @@ public class ResearchV extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setGridColor(new java.awt.Color(204, 204, 204));
+        jTable1.setGridColor(new java.awt.Color(0, 153, 153));
         jScrollPane1.setViewportView(jTable1);
 
         jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 860, 380));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Search:");
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 50, 30));
-        jPanel3.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 210, 10));
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 70, 40));
+        jPanel3.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 540, 10));
 
         jTextField1.setBackground(new java.awt.Color(33, 33, 33));
         jTextField1.setForeground(new java.awt.Color(255, 255, 255));
@@ -577,7 +647,7 @@ public class ResearchV extends javax.swing.JFrame {
                 jTextField1KeyPressed(evt);
             }
         });
-        jPanel3.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, 210, -1));
+        jPanel3.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, 540, -1));
 
         jPanel7.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -606,7 +676,21 @@ public class ResearchV extends javax.swing.JFrame {
 
         jPanel3.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 30, 210, 30));
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 900, 480));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Total Research:");
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 460, 100, 40));
+
+        totalres.setForeground(new java.awt.Color(255, 255, 255));
+        totalres.setText("jLabel13");
+        jPanel3.add(totalres, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 460, 60, 40));
+
+        clear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/delete-cross-outline-interface-symbol.png"))); // NOI18N
+        jPanel3.add(clear, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 40, 20, 40));
+
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 900, 500));
+
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/book.jpg"))); // NOI18N
+        getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 390, 290, 90));
 
         pack();
         setLocationRelativeTo(null);
@@ -826,10 +910,14 @@ public class ResearchV extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel borrow2;
     private javax.swing.JPanel borrow3;
+    private javax.swing.JLabel clear;
     private javax.swing.JPanel delete;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -843,14 +931,18 @@ public class ResearchV extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel logs;
+    private javax.swing.JLabel totalres;
     // End of variables declaration//GEN-END:variables
 }
