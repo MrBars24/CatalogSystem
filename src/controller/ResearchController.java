@@ -36,8 +36,8 @@ public class ResearchController {
     public ResultSet getResearches(String search)
     {
         String sql = "SELECT " + RESEARCH_FIELDS + ", (SELECT transaction_type FROM transaction WHERE transaction.research_id = researches.id ORDER BY created_at DESC LIMIT 1) as latest_transac "
-                + "FROM researches LEFT JOIN keywords ON researches.id = researches.id "
-                + "WHERE title LIKE ? OR keywords.keyword IN(" + buildParams(search) + ") GROUP BY keywords.research_id";
+                + "FROM researches LEFT JOIN keywords ON researches.id = keywords.research_id "
+                + "WHERE title LIKE ? OR keywords.keyword IN(" + buildParams(search) + ") GROUP BY researches.id";
         PreparedStatement stmt;
         ResultSet rs = null;
         

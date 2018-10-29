@@ -8,6 +8,10 @@ import controller.ResearchController;
 import java.awt.event.ActionListener;
 import java.awt.Color;
 import java.awt.Frame;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -23,7 +27,9 @@ import javax.swing.ListModel;
 import model.Keyword;
 import model.Research;
 import java.util.Date;
-import java.awt.Color;
+import javax.swing.SwingUtilities;
+import org.jdesktop.swingx.plaf.basic.BasicDatePickerUI;
+
 
 /**
  *
@@ -55,6 +61,32 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
         
         jList3.setModel(keyModel);
         jList2.setModel(model);
+        
+        jXDatePicker1.getEditor().addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                BasicDatePickerUI picker = (BasicDatePickerUI) jXDatePicker1.getUI();
+                if(!picker.isPopupVisible()) {
+                    picker.toggleShowPopup();
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent me) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent me) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent me) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent me) {
+            }
+        });
     }
     
     public ResearchDialogSubmit(long id, java.awt.Frame parent, boolean modal) {
@@ -72,6 +104,32 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
         jList3.setModel(keyModel);
         
         populateForm();
+        
+        jXDatePicker1.getEditor().addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                BasicDatePickerUI picker = (BasicDatePickerUI) jXDatePicker1.getUI();
+                if(!picker.isPopupVisible()) {
+                    picker.toggleShowPopup();
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent me) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent me) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent me) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent me) {
+            }
+        });
     }
     
     public void populateForm()
@@ -202,23 +260,9 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Published Date");
 
-        jXDatePicker1.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
-            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
-            }
-            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
-            }
-            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
-                jXDatePicker1PopupMenuWillBecomeVisible(evt);
-            }
-        });
-        jXDatePicker1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jXDatePicker1MouseClicked(evt);
-            }
-        });
-        jXDatePicker1.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                jXDatePicker1ComponentShown(evt);
+        jXDatePicker1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jXDatePicker1FocusGained(evt);
             }
         });
         jXDatePicker1.addActionListener(new java.awt.event.ActionListener() {
@@ -678,6 +722,9 @@ public class ResearchDialogSubmit extends javax.swing.JDialog {
     private void jXDatePicker1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jXDatePicker1KeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_jXDatePicker1KeyTyped
+    private void jXDatePicker1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jXDatePicker1FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jXDatePicker1FocusGained
 
     /**
      * @param args the command line arguments
