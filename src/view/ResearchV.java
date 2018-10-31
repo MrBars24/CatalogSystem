@@ -44,6 +44,7 @@ public class ResearchV extends javax.swing.JFrame {
         
         rControl = new ResearchController();
         tm = (DefaultTableModel) jTable1.getModel();
+        clear.setVisible(false);
         
         initList();
         
@@ -685,6 +686,11 @@ public class ResearchV extends javax.swing.JFrame {
         jPanel3.add(totalres, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 460, 60, 40));
 
         clear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/images/delete-cross-outline-interface-symbol.png"))); // NOI18N
+        clear.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                clearMouseClicked(evt);
+            }
+        });
         jPanel3.add(clear, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 40, 20, 40));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 900, 500));
@@ -798,6 +804,13 @@ public class ResearchV extends javax.swing.JFrame {
                 initList(jTextField1.getText());
             }
         }
+        
+        if(jTextField1.getText().length() > 0) {
+            // show clear button
+            clear.setVisible(true);
+        } else {
+            clear.setVisible(false);
+        }
     }//GEN-LAST:event_jTextField1KeyPressed
 
     private void borrow2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_borrow2MouseClicked
@@ -874,6 +887,13 @@ public class ResearchV extends javax.swing.JFrame {
         logs.setOpaque(true);
         logs.setBackground(new Color(159,204,204));
     }//GEN-LAST:event_logsMouseExited
+
+    private void clearMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearMouseClicked
+        // TODO add your handling code here:
+        initList();
+        jTextField1.setText("");
+        clear.setVisible(false);
+    }//GEN-LAST:event_clearMouseClicked
 
    
     /**

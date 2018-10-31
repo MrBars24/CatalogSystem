@@ -46,7 +46,7 @@ CREATE TABLE `users` (
 
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`) VALUES
-(1, 'Test', 'test', 'test');
+(1, 'Admin', 'admin', 'admin');
 
 
 ALTER TABLE `keywords`
